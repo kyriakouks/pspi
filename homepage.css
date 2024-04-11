@@ -28,7 +28,7 @@
 #footer {
     width: 100%;
     height: 100px;
-    position: absolute;
+    position: relative; 
     bottom: 0px;
     right: 0px;
      left: 0px;
@@ -43,4 +43,111 @@
     padding: 0%;
     
     }
+
+
+/* Jim's code */
+#Frame1{
+    display: flex;
+    width: 1200px;
+    height:400px;
+}
+
+
+#Frame1sub1{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 50%;
+}
+
+#Frame1sub2{
+    flex:1;
+}
+
+#image1{
+    flex:1;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+#Frame2{
+    display: flex;
+    width: 1200px;
+    height:400px;
+}
+
+/* 1st box of frame 2*/
+#Frame2sub1{
+    flex:1;   
+
+}
+
+/* 2nd box of frame 2 */
+#Frame2sub2{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 50%;
+}
+
+/* 3rd box of frame 2, with 2 images */
+#Frame2sub3{
+    flex:1;
+}
+
+#image2{
+    height: 50%;
+    width: auto;
+}
+
+#image3{
+    height: 50%;
+    width: auto;
+}
+
+/* 4th box of frame 2, with 2 sub-boxes */
+#Frame2sub4{
+    display: flex;
+    flex-direction: column;
+    flex:1
+}
+
+#paragraph1{
+    flex:1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+
+}
+
+#paragraph2{
+    flex:1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+#Frame3{
+    width: 1200px;
+    height: 600px;
+}
+
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex:1 1 auto;
+}
+
+
+
 /* END CODE HERE */
