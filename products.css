@@ -42,5 +42,50 @@
     margin: 0%;
     padding: 0%;
     
-    }
+}
+
+main {
+    height: 100%;
+    width: 100%;
+}
+
+.frame4 {
+    border-radius: 10px;
+    border: 1px solid rgb(180, 178, 178);
+    width: 1200px;
+    display: block;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.results-table {
+    padding: 20px;
+    width: 100%;
+}
+
+table {
+    text-align: center;
+}
+
+.frame5 {
+    border-radius: 10px;
+    border: 1px solid rgb(180, 178, 178);
+    width: 1200px;
+    display: block;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.add-product {
+    position: relative;
+    height: 350px;
+}
+
+.add-product > button {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+
 /* END CODE HERE */

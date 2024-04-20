@@ -1,4 +1,9 @@
 /* BEGIN CODE HERE */
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
 #navbar {
     position: relative;
     width: 100%;
@@ -36,20 +41,20 @@
 }
 
 #footer > .container2 { 
-    
     width: 100%;
-    height: 100px;
-    margin: 20px;
+    height: 100%;
     padding: 0%;
-    
 }
 
-#footerCol {
+#footer > .container2 > .row {
+    width: 100%;
+    height: 100%;
+}
+
+.footerCol {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px;
-    margin: 0px;
 }
 
 
