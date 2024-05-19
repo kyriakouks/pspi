@@ -42,6 +42,7 @@ main {
 .results-table {
     padding: 20px;
     width: 100%;
+    display: none;  /*hides the block until we search*/
 }
 
 table {

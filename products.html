@@ -32,13 +32,14 @@
     </nav>
 
     <main>
+      <script> src="products.js"</script> 
       <div class="frame4">
-        <form class="input-group w-50 search" action="edw bazoume action gia search">
+        <form class="input-group w-50 search" action="">
           <label class="col-form-label me-3" for="search-product">Search a product:</label>
-          <input class="form-control" placeholder="input" type="text" id="search-product" name="search-product" required/>
-          <button class="btn btn-primary" type="submit" value="submit">Search</button>
+          <input class="form-control" placeholder="input" type="text" id="searchProduct" name="searchProduct" required/>
+          <button class="btn btn-primary" type="button" onclick="searchButtonOnClick()" value="submit">Search</button>
         </form>
-        <div class="results-table mt-5">
+        <div class="results-table mt-5" id="hiddenDiv">
           <p class="lead">
             Results:
           </p>
@@ -76,21 +77,21 @@
           </div>
           <div class="input-group w-25 mx-5 my-3">
             <label class="col-form-label me-3" for="product-year">Production year:</label>
-            <input class="form-control" placeholder="input" type="number" id="product-year" name="product-year" required/>
+            <input class="form-control" placeholder="input" type="number" id="product-year" name="product-year" required max="9999"/>
           </div>
           <div class="input-group w-25 mx-5 my-3">
-            <label class="col-form-label me-3" for="product-price">Price:</label>
-            <input class="form-control" placeholder="input" type="number" id="product-price" name="product-price" required/>
+            <label class="col-form-label me-3" for="product-price">Price ($US):</label>
+            <input class="form-control" placeholder="input" type="number" id="product-price" name="product-price" required min="0"/>
           </div>
           <div class="input-group w-25 mx-5 my-3">
             <label class="col-form-label me-3" for="product-color">Color:</label>
             <input class="form-control" placeholder="input" type="color" id="product-color" name="product-color" required/>
           </div>
           <div class="input-group w-25 mx-5 my-3">
-            <label class="col-form-label me-3" for="product-size">Size:</label>
-            <input class="form-control" placeholder="input" type="number" id="product-size" name="product-size" required/>
+            <label class="col-form-label me-3" for="product-size">Size (cm):</label>
+            <input class="form-control" placeholder="input" type="number" id="product-size" name="product-size" required min="0"/>
           </div>          
-          <button class="btn btn-primary" type="submit" value="submit">Save</button>
+          <button class="btn btn-primary" type="button" onclick="productFormOnSubmit()" value="submit">Save</button>
         </form>
       </div>
 
