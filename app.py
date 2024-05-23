@@ -1,9 +1,10 @@
 # BEGIN CODE HERE
-from flask import Flask, url_for, render_template, request, redirect, jsonify
+from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
-from pymongo import MongoClient
 from flask_cors import CORS
 from pymongo import TEXT
+from bson import json_util
+import json
 # END CODE HERE
 
 app = Flask(__name__)
@@ -12,91 +13,50 @@ CORS(app)
 mongo = PyMongo(app)
 mongo.db.products.create_index([("name", TEXT)])
 
-
-if __name__ == "__main__":
-    app.run(debug=True)  # only for our tests REMOVE LATER
+def parse_json(data):
+    return json.loads(json_util.dumps(data))
 
 @app.route("/search", methods=["GET"])
 def search():
     # BEGIN CODE HERE
-    print("tis  mamas  sou")
-    query = request.args.get('query')
-    print(query)
-    if query:
-        results = mongo.db.products.find({"$text": {"$search": query}})
-        output = []
-        for product in results:
-            product['_id'] = str(product['_id'])  # Convert ObjectId to string
-            output.append(product)
-        return jsonify(output)
-    else:
-        return jsonify({"error": "No query provided"}), 400
+    try:
+        name = request.args.get('name')
+        inserted_name = mongo.db.products.find({"name": name})
+        results = list(inserted_name) 
+        parsed_results = parse_json(results)
+        return jsonify({"results": parsed_results})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     # END CODE HERE
+
 
 @app.route("/add-product", methods=["POST"])
 def add_product():
-    # BEGIN CODE HERE
-    collection = mongo.db.products
-    data = request.json
-    name = data.get('name')
-    year = data.get('year')
-    price = data.get('price')
-    color = data.get('color')
-    size = data.get('size')
-    
-    if not all([name, year, price, color, size]):
-        return jsonify({"error": "Missing fields"}), 400
-    
-    product = {'name': name, 'year': year, 'price': price, 'color': color, 'size': size}
-    collection.insert_one(product)
-    
-    return jsonify({"message": "Product added successfully"}), 201
-    # END CODE HERE
+    try:
+        # BEGIN CODE HERE
+        data = request.json
+        inserted_id = mongo.db.products.insert_one(data).inserted_id
+        return "true"
+        # END CODE HERE
+        return "Success"
+    except Exception as e:
+        print("Error:", e)
+        return "Error occurred", 500
+
+
 
 @app.route("/content-based-filtering", methods=["POST"])
 def content_based_filtering():
     # BEGIN CODE HERE
-    data = request.json
-    name = data.get('name')
-    
-    if not name:
-        return jsonify({"error": "No product name provided"}), 400
-    
-    product = mongo.db.products.find_one({"name": name})
-    
-    if not product:
-        return jsonify({"error": "Product not found"}), 404
-    
-    # Assuming a simple content-based filtering example by similar attributes
-    similar_products = mongo.db.products.find({
-        "color": product["color"],
-        "size": product["size"],
-        "price": {"$lte": product["price"] + 100, "$gte": product["price"] - 100}
-    })
-    
-    output = []
-    for sim_product in similar_products:
-        sim_product['_id'] = str(sim_product['_id'])  # Convert ObjectId to string
-        output.append(sim_product)
-        
-    return jsonify(output)
+    return ""
     # END CODE HERE
+
 
 @app.route("/crawler", methods=["GET"])
 def crawler():
     # BEGIN CODE HERE
-    # Example crawler that retrieves and processes data
-    # Since the specific details of the crawler are not provided, this will be a placeholder.
-    
-    def dummy_crawler():
-        # Placeholder for actual web crawling logic
-        # This should contain the logic to scrape data from web pages and store it in the database
-        return [{"name": "Crawled Product 1"}, {"name": "Crawled Product 2"}]
-    
-    crawled_data = dummy_crawler()
-    
-    for item in crawled_data:
-        mongo.db.products.insert_one(item)
-    
-    return jsonify({"message": "Crawling and insertion successful"}), 200
+    return ""
     # END CODE HERE
+
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
