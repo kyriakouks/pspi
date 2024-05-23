@@ -1,8 +1,14 @@
 # BEGIN CODE HERE
+<<<<<<< HEAD
 from flask import Flask, jsonify, request
+=======
+from flask import Flask, request, jsonify
+>>>>>>> 510860dbb864db0ca494d8a95c3ed85d3a1eaaff
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from pymongo import TEXT
+from bson import json_util
+import json
 # END CODE HERE
 
 app = Flask(__name__)
@@ -11,17 +17,34 @@ CORS(app)
 mongo = PyMongo(app)
 mongo.db.products.create_index([("name", TEXT)])
 
+<<<<<<< HEAD
+=======
+def parse_json(data):
+    return json.loads(json_util.dumps(data))
+>>>>>>> 510860dbb864db0ca494d8a95c3ed85d3a1eaaff
 
 @app.route("/search", methods=["GET"])
 def search():
     # BEGIN CODE HERE
+<<<<<<< HEAD
     
     return "<p>hello</p>"
+=======
+    try:
+        name = request.args.get('name')
+        inserted_name = mongo.db.products.find({"name": name})
+        results = list(inserted_name) 
+        parsed_results = parse_json(results)
+        return jsonify({"results": parsed_results})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+>>>>>>> 510860dbb864db0ca494d8a95c3ed85d3a1eaaff
     # END CODE HERE
 
 
 @app.route("/add-product", methods=["POST"])
 def add_product():
+<<<<<<< HEAD
     # BEGIN CODE HERE
     new_product = request.json
     exists = mongo.db.products.find_one({"name": new_product["name"]})
@@ -65,6 +88,20 @@ def add_product():
     #     mongo.db.products.insert_one(product)
     #     return jsonify({"message": "Product added"}), 201
     # END CODE HERE
+=======
+    try:
+        # BEGIN CODE HERE
+        data = request.json
+        inserted_id = mongo.db.products.insert_one(data).inserted_id
+        return "true"
+        # END CODE HERE
+        return "Success"
+    except Exception as e:
+        print("Error:", e)
+        return "Error occurred", 500
+
+
+>>>>>>> 510860dbb864db0ca494d8a95c3ed85d3a1eaaff
 
 
 @app.route("/content-based-filtering", methods=["POST"])
@@ -80,5 +117,10 @@ def crawler():
     return ""
     # END CODE HERE
 
+<<<<<<< HEAD
 if __name__ == '__main__':
     app.run(debug=True)
+=======
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
+>>>>>>> 510860dbb864db0ca494d8a95c3ed85d3a1eaaff
