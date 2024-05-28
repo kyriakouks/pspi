@@ -32,7 +32,6 @@
     </nav>
 
     <main>
-      <script> src="products.js"</script> 
       <div class="frame4">
         <form class="input-group w-50 search" >
           <label class="col-form-label me-3" id="search-product">Search a product:</label>
@@ -77,13 +76,13 @@
           </div>
           <div class="input-group w-25 mx-5 my-3">
             <label class="col-form-label me-3" for="product-color">Color:</label>
-            <input class="form-control" placeholder="input" type="color" id="product-color" name="product-color" required/>
+            <input class="form-control" placeholder="input" type="number" id="product-color" name="product-color" required/>
           </div>
           <div class="input-group w-25 mx-5 my-3">
             <label class="col-form-label me-3" for="product-size">Size (cm):</label>
             <input class="form-control" placeholder="input" type="number" id="product-size" name="product-size" required min="0"/>
           </div>          
-          <button class="btn btn-primary" type="button" onclick="productFormOnSubmit()" value="submit">Save</button>
+          <button class="btn btn-primary" onclick="productFormOnSubmit()" type="button" id="save"  >Save</button>
         </form>
       </div>
 
