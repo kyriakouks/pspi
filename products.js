@@ -45,7 +45,7 @@ searchButtonOnClick = () => {
           x.style.display = "block";
         }
       }else{
-        console.error("Error "+data.status )
+        console.error("Error")
       }
     }
   };
@@ -63,8 +63,8 @@ productFormOnSubmit = (event) => {
   if (!getName || !getPrice || !getYear || !getColor || !getSize) {
     alert("Please fill all the fields");
     return;
-
   }
+
 
   const request = new XMLHttpRequest();
   request.open("POST",api+"/add-product");
@@ -91,4 +91,5 @@ productFormOnSubmit = (event) => {
     }
   }
   request.send(data);
+  alert("OK");
 };

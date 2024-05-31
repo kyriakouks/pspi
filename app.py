@@ -4,9 +4,10 @@ from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from flask_cors import CORS
 from pymongo import TEXT
-from bson import json_util
-import json
-
+import numpy as np
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 # END CODE HERE
 
 app = Flask(__name__)
@@ -15,26 +16,24 @@ CORS(app)
 mongo = PyMongo(app)
 mongo.db.products.create_index([("name", TEXT)])
 
-def parse_json(data):
-    return json.loads(json_util.dumps(data))
-
-
 @app.route("/search", methods=["GET"])
 def search():
     # # BEGIN CODE HERE
-    try:
-        name = request.args.get('name')
-        inserted_name = mongo.db.products.find({"name": name})
-        results = list(inserted_name) 
-        parsed_results = parse_json(results)
-        return jsonify({"results": parsed_results})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    name = request.args.get('name') 
+    results = list(mongo.db.products.find({'name': {'$regex': name, '$options': 'i'}}).sort('price',-1))
+
+    found_products = []
+
+    for r in results:
+        found_products.append([str(r['_id']),r['name'],r['production_year'],r['price'],r['color'],r['size']])
+
+    return jsonify(found_products)
     # # END CODE HERE
 
 
 @app.route("/add-product", methods=["POST"])
 def add_product():
+    # # BEGIN CODE HERE
     data = request.json
     query = {"name": data["name"]}
     exists = mongo.db.products.find_one(query)
@@ -46,19 +45,49 @@ def add_product():
     else:
         mongo.db.products.insert_one(data)
         return "added item"
+    # # END CODE HERE
+    
 
 
 @app.route("/content-based-filtering", methods=["POST"])
 def content_based_filtering():
     # BEGIN CODE HERE
-    return ""
+    given_product = request.json
+    given_product_metrics = [given_product['production_year'],given_product['price'],given_product['color'],given_product['size']]
+    
+    avaliable_products = list(mongo.db.products.find())
+
+    similar = []
+    for product in avaliable_products:
+        metrics= [product['production_year'],product['price'],product['color'],product['size']]
+
+        cosine_similarity = np.dot(given_product_metrics,metrics)/np.linalg.norm(given_product_metrics,metrics)
+        if cosine_similarity > 0.7:
+            similar.append[product['name']]
+
+    return jsonify(similar)
     # END CODE HERE
 
 
 @app.route("/crawler", methods=["GET"])
 def crawler():
     # BEGIN CODE HERE
-    return ""
+    semester_number = request.args.get('semester')
+    url = "https://qa.auth.gr/el/x/studyguide/600000438/current"
+
+    options = Options()
+    options.headless = True
+    driver = webdriver.Chrome(options=options)
+
+    driver.get(url)
+
+    semester_table = driver.find_element(By.ID,'exam'+semester_number)
+    semester_courses = list(semester_table.find_elements(By.TAG_NAME,'a'))
+    courses = []
+    for course in semester_courses:
+        courses.append(course.text)
+
+    return jsonify(courses)
     # END CODE HERE
 
 if __name__ == "__main__":
