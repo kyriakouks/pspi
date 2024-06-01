@@ -2,28 +2,27 @@ const api = "http://127.0.0.1:5000";
 
 window.onload = () => {
   // You can add any initialization logic here if needed
-  
 };
 
 searchButtonOnClick = () => {
   const name = document.getElementById("searchProduct").value;
   var x = document.getElementById("hiddenDiv");
   let request = new XMLHttpRequest();
-  request.open("GET",api + "/search?name=" + encodeURIComponent(name));
+  request.open("GET", api + "/search?name=" + encodeURIComponent(name));
 
-  request.onreadystatechange = function(){
-    if (request.readyState === XMLHttpRequest.DONE){
-      if (request.status === 200){
+  request.onreadystatechange = function () {
+    if (request.readyState === XMLHttpRequest.DONE) {
+      if (request.status === 200) {
         var data = JSON.parse(request.responseText);
         var dataArray = new Array(data);
         console.log(data);
-        if ( dataArray< 1) {
-            x.style.display = "none";
-            return; 
-         }
+        if (dataArray < 1) {
+          x.style.display = "none";
+          return;
+        }
         const existingTable = document.getElementsByClassName("result-table");
-        console.log(existingTable)
-        if (existingTable.length >0) {
+        console.log(existingTable);
+        if (existingTable.length > 0) {
           existingTable.remove();
         }
         const table = document.getElementById("table-body-names");
@@ -46,12 +45,12 @@ searchButtonOnClick = () => {
           td5.innerText = result.size;
           x.style.display = "block";
         }
-      }else{
-        console.error("Error")
+      } else {
+        console.error("Error");
       }
     }
   };
-  
+
   request.send();
 };
 
@@ -63,35 +62,36 @@ productFormOnSubmit = (event) => {
   const getSize = document.getElementById("product-size").value;
 
   if (!getName || !getPrice || !getYear || !getColor || !getSize) {
-    alert("Please fill all the fields");
+    // alert("Please fill all the fields");
     return;
   }
 
+  if (getColor < 1 || getColor > 3 || getSize < 1 || getSize > 4) {
+    return;
+  }
 
   const request = new XMLHttpRequest();
-  request.open("POST",api+"/add-product");
-  request.setRequestHeader('Content-Type', 'application/json');
-  const data = JSON.stringify(
-    {
-      name : getName,
-      production_year : parseInt(getYear),
-      price : parseInt(getPrice),
-      color: parseInt(getColor),
-      size: parseInt(getSize)
-    }
-  );
+  request.open("POST", api + "/add-product");
+  request.setRequestHeader("Content-Type", "application/json");
+  const data = JSON.stringify({
+    name: getName,
+    production_year: parseInt(getYear),
+    price: parseInt(getPrice),
+    color: parseInt(getColor),
+    size: parseInt(getSize),
+  });
 
-  request.onreadystatechange = function(){
-    if (request.readyState === XMLHttpRequest.DONE){
-      if (request.status === 200){
-        document.getElementById("product-name").value = '';
-        document.getElementById("product-year").value = '';
-        document.getElementById("product-price").value = '';
-        document.getElementById("product-color").value = '';
-        document.getElementById("product-size").value = '';
+  request.onreadystatechange = function () {
+    if (request.readyState === XMLHttpRequest.DONE) {
+      if (request.status === 200) {
+        document.getElementById("product-name").value = "";
+        document.getElementById("product-year").value = "";
+        document.getElementById("product-price").value = "";
+        document.getElementById("product-color").value = "";
+        document.getElementById("product-size").value = "";
       }
     }
-  }
+  };
   request.send(data);
   alert("OK");
 };
