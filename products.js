@@ -15,9 +15,11 @@ searchButtonOnClick = () => {
     if (request.readyState === XMLHttpRequest.DONE){
       if (request.status === 200){
         var data = JSON.parse(request.responseText);
-        if (data.results.length < 1) {
+        var dataArray = new Array(data);
+        console.log(data);
+        if ( dataArray< 1) {
             x.style.display = "none";
-            return;
+            return; 
          }
         const existingTable = document.getElementsByClassName("result-table");
         console.log(existingTable)
@@ -26,7 +28,7 @@ searchButtonOnClick = () => {
         }
         const table = document.getElementById("table-body-names");
         table.classList.add("result-table");
-        for (result of data.results) {
+        for (result of dataArray) {
           const row = table.insertRow();
 
           const td0 = row.insertCell(0);

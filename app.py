@@ -60,10 +60,11 @@ def content_based_filtering():
     similar = []
     for product in avaliable_products:
         metrics= [product['production_year'],product['price'],product['color'],product['size']]
-
-        cosine_similarity = np.dot(given_product_metrics,metrics)/np.linalg.norm(given_product_metrics,metrics)
+        cosine_similarity = np.dot(given_product_metrics,metrics)/(np.linalg.norm(given_product_metrics)*np.linalg.norm(metrics))
+        print(cosine_similarity)
         if cosine_similarity > 0.7:
-            similar.append[product['name']]
+         
+          similar.append(product['name'])
 
     return jsonify(similar)
     # END CODE HERE
