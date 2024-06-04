@@ -14,20 +14,22 @@ searchButtonOnClick = () => {
     if (request.readyState === XMLHttpRequest.DONE) {
       if (request.status === 200) {
         var data = JSON.parse(request.responseText);
-        var dataArray = new Array(data);
         console.log(data);
-        if (dataArray < 1) {
-          x.style.display = "none";
-          return;
-        }
-        const existingTable = document.getElementsByClassName("result-table");
-        console.log(existingTable);
-        if (existingTable.length > 0) {
-          existingTable.remove();
-        }
+        
+        // If no data, hide the table
+        // if (data.length < 1) {
+        //   x.style.display = "none";
+        //   return;
+        // }
+        
+        // Remove any existing rows in the table body
         const table = document.getElementById("table-body-names");
-        table.classList.add("result-table");
-        for (result of dataArray) {
+        while (table.firstChild) {
+          table.removeChild(table.firstChild);
+        }
+
+        // Add new data to the table
+        data.forEach(result => {
           const row = table.insertRow();
 
           const td0 = row.insertCell(0);
@@ -37,14 +39,16 @@ searchButtonOnClick = () => {
           const td4 = row.insertCell(4);
           const td5 = row.insertCell(5);
 
-          td0.innerText = result._id.$oid;
+          td0.innerText = result.id;
           td1.innerText = result.name;
           td2.innerText = result.production_year;
           td3.innerText = result.price;
           td4.innerText = result.color;
           td5.innerText = result.size;
-          x.style.display = "block";
-        }
+        });
+
+        // Show the result table
+        x.style.display = "block";
       } else {
         console.error("Error");
       }

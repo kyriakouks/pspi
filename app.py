@@ -25,7 +25,16 @@ def search():
     found_products = []
 
     for r in results:
-        found_products.append([str(r['_id']),r['name'],r['production_year'],r['price'],r['color'],r['size']])
+        product_schema = {
+            "id": str(r['_id']),
+            "name": r['name'],
+            "production_year": r['production_year'],
+            "price": r['price'],
+            "color": r['color'],
+            "size": r['size']
+        }
+        found_products.append(product_schema)
+
 
     return jsonify(found_products)
     # # END CODE HERE
