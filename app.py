@@ -1,7 +1,6 @@
 # BEGIN CODE HERE
-from flask import Flask, url_for, render_template, request, redirect, jsonify # type: ignore
+from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
-from pymongo import MongoClient
 from flask_cors import CORS
 from pymongo import TEXT
 import numpy as np
@@ -70,9 +69,8 @@ def content_based_filtering():
     for product in avaliable_products:
         metrics= [product['production_year'],product['price'],product['color'],product['size']]
         cosine_similarity = np.dot(given_product_metrics,metrics)/(np.linalg.norm(given_product_metrics)*np.linalg.norm(metrics))
-        print(cosine_similarity)
+        
         if cosine_similarity > 0.7:
-         
           similar.append(product['name'])
 
     return jsonify(similar)

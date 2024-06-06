@@ -16,16 +16,10 @@ searchButtonOnClick = (event) => {
     if (request.readyState === XMLHttpRequest.DONE) {
       if (request.status === 200) {
         var data = JSON.parse(request.responseText);
-        
-
-        
-        // Remove any existing rows in the table body
         const table = document.getElementById("table-body-names");
         while (table.firstChild) {
           table.removeChild(table.firstChild);
         }
-
-        // Add new data to the table
         data.forEach(result => {
           const row = table.insertRow();
 
