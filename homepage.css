@@ -73,10 +73,12 @@
     overflow-wrap: break-word;
     word-wrap: break-word;
     max-width: 50%;
+    width: 600px;
 }
 
 #Frame1sub2{
     flex:1;
+    width: 600px;
 }
 
 #image1{
@@ -96,7 +98,7 @@
 /* 1st box of frame 2*/
 #Frame2sub1{
     flex:1;   
-
+    width: 300px;
 }
 
 /* 2nd box of frame 2 */
@@ -107,28 +109,33 @@
     overflow-wrap: break-word;
     word-wrap: break-word;
     max-width: 50%;
+    width: 300px;
 }
 
 /* 3rd box of frame 2, with 2 images */
 #Frame2sub3{
     flex:1;
+    width: 300px;
 }
 
 #image2{
     height: 50%;
-    width: auto;
+    /* width: auto; */
+    width: 100%;
 }
 
 #image3{
     height: 50%;
-    width: auto;
+    /* width: auto; */
+    width: 100%;
 }
 
 /* 4th box of frame 2, with 2 sub-boxes */
 #Frame2sub4{
     display: flex;
     flex-direction: column;
-    flex:1
+    flex:1;
+    width: 300px;
 }
 
 #paragraph1{
