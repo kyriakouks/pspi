@@ -4,8 +4,10 @@ window.onload = () => {
   // You can add any initialization logic here if needed
 };
 
-searchButtonOnClick = () => {
+searchButtonOnClick = (event) => {
+  event.preventDefault();
   const name = document.getElementById("searchProduct").value;
+
   var x = document.getElementById("hiddenDiv");
   let request = new XMLHttpRequest();
   request.open("GET", api + "/search?name=" + encodeURIComponent(name));
@@ -14,13 +16,8 @@ searchButtonOnClick = () => {
     if (request.readyState === XMLHttpRequest.DONE) {
       if (request.status === 200) {
         var data = JSON.parse(request.responseText);
-        console.log(data);
         
-        // If no data, hide the table
-        if (data.length < 1) {
-          x.style.display = "none";
-          return;
-        }
+
         
         // Remove any existing rows in the table body
         const table = document.getElementById("table-body-names");
@@ -58,6 +55,8 @@ searchButtonOnClick = () => {
   request.send();
 };
 
+
+
 productFormOnSubmit = (event) => {
   const getName = document.getElementById("product-name").value;
   const getYear = document.getElementById("product-year").value;
@@ -66,7 +65,6 @@ productFormOnSubmit = (event) => {
   const getSize = document.getElementById("product-size").value;
 
   if (!getName || !getPrice || !getYear || !getColor || !getSize) {
-    // alert("Please fill all the fields");
     return;
   }
 

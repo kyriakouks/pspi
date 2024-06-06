@@ -33,10 +33,10 @@
 
     <main>
       <div class="frame4">
-        <form class="input-group w-50 search" >
+        <form class="input-group w-50 search" onsubmit="searchButtonOnClick(event)">
           <label class="col-form-label me-3" id="search-product">Search a product:</label>
-          <input class="form-control" placeholder="input" type="text" id="searchProduct" name="searchProduct" required/>
-          <button class="btn btn-primary" type="button" onclick="searchButtonOnClick()" value="submit">Search</button>
+          <input class="form-control" placeholder="input" type="text" id="searchProduct" name="searchProduct" required />
+          <button class="btn btn-primary" type="submit">Search</button>
         </form>
         <div class="results-table mt-5" id="hiddenDiv">
           <p class="lead">
