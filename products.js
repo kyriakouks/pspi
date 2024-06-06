@@ -17,10 +17,10 @@ searchButtonOnClick = () => {
         console.log(data);
         
         // If no data, hide the table
-        // if (data.length < 1) {
-        //   x.style.display = "none";
-        //   return;
-        // }
+        if (data.length < 1) {
+          x.style.display = "none";
+          return;
+        }
         
         // Remove any existing rows in the table body
         const table = document.getElementById("table-body-names");
